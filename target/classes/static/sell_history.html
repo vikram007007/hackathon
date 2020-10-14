@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sell History</title>
+    <link rel="stylesheet" href="stylesheets/history.css" />
+
+    <script>
+    
+    function getBuy() {
+       // done using promise using then function syntax
+        fetch('stocks/sell').then(function(result) {
+            return result.json();
+        }).then(function (tradeList) {
+        	 
+        	
+
+            let htmlString="<h1>Sell History</h1>";
+            tradeList.map((trade) => {
+            	
+            	htmlString+="<div id=\"pricing-table\">";
+                htmlString+= "<div class=\"plan\">";
+                
+                htmlString+="<h3>" + trade.ticker + "<span>" + trade.price +"$"+"</span></h3>";
+                
+          
+                
+                
+                var d = new Date(trade.date);
+
+                var date = d.getDate();
+                var month = d.getMonth(); 
+                var year = d.getFullYear();
+
+                var dateString = date + "-" +(month + 1) + "-" + year;
+                
+                htmlString+="<ul><li>" + dateString + "</li>";
+                htmlString+="<li><b>Quantity:</b>" + trade.quantity+ "</li>";
+                htmlString+="<li><b>State:</b>" + trade.state+ "</li></ul></div></div>";
+                
+                
+            });
+        
+            document.getElementById("tradeDiv").innerHTML = htmlString;
+        });
+    }
+   
+           
+    </script>
+</head>
+
+
+<body onLoad="getBuy()">
+   
+       
+        
+ 
+  <div id="tradeDiv"></div>
+       
+   
+</body>
+</html>

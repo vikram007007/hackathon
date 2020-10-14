@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>SELL STOCKS</title>
+
+    <!-- Icons font CSS-->
+    <link href="bvendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="bvendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="bvendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="bvendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="bcss/main.css" rel="stylesheet" media="all">
+ <script>
+        
+
+ var availablequantity;
+ 
+ 
+ function myFunction() {
+ 
+	 //getting ticker from url
+	 const queryString = window.location.search;
+ 	const urlParams = new URLSearchParams(queryString);
+ 	document.getElementById("ticker").value =urlParams.get('ticker');
+
+ 	//fetch price from controller
+ 	fetch('stocks/price/'+urlParams.get('ticker')).then(function(response){
+         response.json().then(function(data) {
+        	 availableprice=data;
+        	 document.getElementById("price").value =data;
+         	
+         	
+         });
+     }).catch(function(error) {
+         console.log('Fetch Error:', error);
+     });
+ 	
+ 	//fetch available quantity for sell and need to set username from session
+ 	fetch('stocks/sell/'+urlParams.get('ticker')+'/Ahilan004').then(function(response){
+         response.json().then(function(data) {
+         	availablequantity=data;
+         	
+         	document.getElementById("AvailableQuantity").value=availablequantity;
+         	if(availablequantity==0){
+         		alert("0 Quantity to sell");
+         		window.location.href="index.html";
+         	}
+         });
+     }).catch(function(error) {
+         console.log('Fetch Error:', error);
+     });
+
+ 	
+ }
+ 
+         //store details in mongodb and need to set username in mongo
+            async function submitHandler(event) {
+            	if(availablequantity==0){
+             		alert("0 Quantity to sell");
+             		window.location.href="index.html";
+             		return false;
+             	}
+            	else if(document.getElementById('quantity').value==0){
+            		alert("Select Quantity to sell");
+             		window.location.href="#";
+            		return false;
+            	}
+            	else{
+                alert("Trade created");
+                // stops the form submitting itself we want to send the data to a REST API
+                event.preventDefault();
+                let form = event.target;
+                let trade= {}; 
+                trade.type ="SELL";
+                trade.ticker= form.ticker.value;
+                trade.quantity= form.quantity.value;
+                // done with a promise using await / async syntax
+                let response = await addtrade(trade);
+                window.location.href="index.html";
+                return false;
+            }}
+
+            async function addtrade(trade) {
+                let response = await fetch("/stocks/sellorder", {
+                    method: "POST",
+                    headers :{
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(trade)
+                });
+            }
+            
+            
+            //calculate amount for quantity
+            function multiply()
+            {
+var FieldVal = document.getElementById('quantity').value;  
+        	    
+            	if(AvailableQuantity==0){
+            		alert("No available stocks to sell");
+            	}
+            	else if(FieldVal <= availablequantity) {           
+        	    	         
+        	    } else {             
+        	    	document.getElementById('quantity').value=0;
+        	    	alert("Choose lesser quanitity");   
+        	    	
+        	    } 
+                a = Number(document.getElementById('quantity').value);
+                b = Number(document.getElementById('price').value);
+                c = a * b;
+
+                document.getElementById('total').value = c;
+            }
+            
+            //calculate quantity for amount
+            function subtract()
+            {
+            	var FieldVal = document.getElementById('total').value;  
+            	if(AvailableQuantity==0){
+            		alert("No available stocks to sell");
+            	}
+        	    if(FieldVal <=(availablequantity*document.getElementById('price').value)) {           
+        	    	         
+        	    } 
+        	    else {             
+        	    	document.getElementById('total').value=0;
+        	    	alert("Choose lesser amount");   
+        	    	
+        	    } 
+
+                a = Number(document.getElementById('total').value);
+                b = Number(document.getElementById('price').value);
+                c = a/b;
+                c=Math.floor(c)
+                document.getElementById('quantity').value = c;
+            }
+            
+            //function for changing price when ticker changed
+            function calculateprice(value){
+            	fetch('stocks/price/'+value).then(function(response){
+                    response.json().then(function(data) {
+                   	 availableprice=data;
+                   	 document.getElementById("price").value =data;
+                    	
+                    	
+                    });
+                }).catch(function(error) {
+                    console.log('Fetch Error:', error);
+                });
+            	
+            	fetch('stocks/sell/'+value+'/Ahilan004').then(function(response){
+                    response.json().then(function(data) {
+                    	availablequantity=data;
+                    	
+                    	document.getElementById("AvailableQuantity").value=availablequantity;
+                    	
+                    });
+                }).catch(function(error) {
+                    console.log('Fetch Error:', error);
+                });
+
+            		
+            	
+            }
+            
+            //function for dropdown box
+            function enableText(period) {
+            	var str=1;
+
+            	if(period==1){
+            		//alert(typeof str);
+            		  var text1 = document.getElementById('total');
+                      var text= document.getElementById('quantity');
+                      document.getElementById("total").value =0;
+                      document.getElementById("quantity").value =0;
+                      text1.readOnly = true;
+                      text.readOnly = false;
+                                 }
+            	else if(period==2) {
+//            		alert(typeof period);
+            		var text1 = document.getElementById('total');
+                    var text= document.getElementById('quantity');
+                    document.getElementById("quantity").value =0;
+                    document.getElementById("total").value =0;
+                    text1.readOnly =false;
+                    text.readOnly = true;                
+                	}
+            	else{
+            		var text1 = document.getElementById('total');
+                    var text= document.getElementById('quantity');
+                    document.getElementById("quantity").value =0;
+                    document.getElementById("total").value =0;
+                    
+                    text1.readOnly =true;
+                    text.readOnly = true;             
+            		
+            	}
+            }
+
+            
+            
+            
+            
+            
+            
+        </script>
+
+</head>
+
+<body onload="myFunction();myFunction1()">
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">SELL Stocks</h2>
+                    <form id="addForm">
+                        
+
+				 <div class="row row-space">
+                            <div class="col-2">
+                                <div class="form-group col-md-5">
+                                    <label class="label">Ticker</label>
+                                    <input id="ticker" class="input--style-4" type="text" name="ticker" onchange="calculateprice(this.value)" placeholder="Select Ticker"/>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group col-md-5">
+                                    <label class="label">Price</label>
+                                    <input id="price" class="input--style-4" type="text" name="price"/>
+                                </div>
+                            </div>
+                            
+                            <div class="col-2">
+                                <div class="form-group col-md-5">
+                                    <label class="label">Available Quantity</label>
+                                    <input id="AvailableQuantity" readOnly="true" class="input--style-4" type="text"/ >
+                                </div>
+                            </div>
+                            
+                            
+                        </div>	
+				<br>
+				<br>
+
+	
+	<div class="form-group col-md-5">
+                            <label class="label">How you want to sell Stocks?</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                 <select onchange="enableText(this.value)" name="select stock">
+                                    <option selected="selected" value=3 >Choose option</option>
+                                    <option value=1>Quantity</option>
+                                    <option value=2>Amount</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                  
+    		
+			
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="form-group col-md-5">
+                                    <label class="label">Quantity</label>
+                                    <input class="input--style-4" 
+					type="number" 
+					 
+					id="quantity"
+					min=0
+					onclick="multiply()"
+             		   		onKeyup="multiply()"
+                			required/>
+                                </div>
+                            </div>
+				
+				<div class="col-2">
+                                <div class="form-group col-md-5">
+                                    <label class="label">Amount</label>
+                                    <input class="input--style-4" 
+					type="number" 
+					 
+					id="total"
+					min=0
+					onclick="subtract()"
+             		   		onKeyup="subtract()"
+                			required/>
+                                </div>
+                            </div>
+
+                        </div>
+                         <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" type="submit">SELL</button>
+                        </div>
+		</form>
+                </div>
+<script>
+          document.getElementById("addForm").addEventListener("submit", submitHandler);
+      </script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="bvendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="bvendor/select2/select2.min.js"></script>
+    <script src="bvendor/datepicker/moment.min.js"></script>
+    <script src="bvendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="bjs/global.js"></script>
+
+</body>
+
+</html>
+<!-- end document-->
