@@ -1,0 +1,28 @@
+version: '3.0'
+
+volumes:
+  mongodbvol:
+
+services:
+  mongodb:
+    container_name: mongodb
+    build:
+      context: .
+      dockerfile: Dockerfile-mongodb
+    image: mongodb
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - mongodbvol:/data/db
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app
+    ports:
+      - "8080:8080"
+    links:
+      - mongodb:mongodb
