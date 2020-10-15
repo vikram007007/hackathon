@@ -78,4 +78,67 @@ public class SellStockController {
 		return buyquantity-sellquantity;	
 		}
 
+
+	@GetMapping("/sellquantity/{username}")
+	public List<Trade> getByUsername(@PathVariable String username){
+		List<Trade> listTrade = new ArrayList<Trade>();
+		List<Trade> listTraderesult = new ArrayList<Trade>();
+		List<String> listTradechecked = new ArrayList<String>();
+		//String username="Ahilan004";
+		//TradeType TradType = TradeType.valueOf("BUY");
+		listTrade=stockRepository.findByUsername(username);
+		
+		
+		for (int i = 0; i <listTrade.size(); i++) {
+			int buyquantity=0;
+			int sellquantity=0;
+			TradeType TradTypeBuy = TradeType.valueOf("BUY");
+			TradeType TradTypeSell = TradeType.valueOf("SELL");
+			TradeState TradStateFilled=TradeState.valueOf("FILLED");
+			TradeState TradStateRejected=TradeState.valueOf("REJECTED");
+			
+			buyquantity+=listTrade.get(i).getQuantity();
+			String ticker=listTrade.get(i).getTicker();
+			
+			if(listTradechecked.contains(ticker)) {
+				
+			}
+			else {
+				listTradechecked.add(ticker);
+			
+			for (int j =i+1; j <listTrade.size(); j++) {
+			
+				if(listTrade.get(j).getType().equals(TradTypeBuy)&&listTrade.get(j).getState().equals(TradStateFilled)&&listTrade.get(j).getTicker().equals(ticker)) {
+			    	buyquantity+=listTrade.get(j).getQuantity();
+			    }
+			    
+			    else if(listTrade.get(j).getType().equals(TradTypeSell)&&!listTrade.get(j).getState().equals(TradStateRejected)&&listTrade.get(j).getTicker().equals(ticker)) {
+			    	sellquantity+=listTrade.get(j).getQuantity();
+			    }
+			    else {
+			    	
+			    }
+				
+			}
+			if((buyquantity-sellquantity)>0) {
+				 
+		         
+		        	listTrade.get(i).setQuantity(Double.valueOf(buyquantity-sellquantity));
+		        	listTraderesult.add(listTrade.get(i)); 
+		         }
+			}	
+			
+			
+			
+		}
+		
+		
+		
+		
+		return listTraderesult;	
+		}
+
+
+
+	
 	}

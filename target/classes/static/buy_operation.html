@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <title>Buy Operations</title>
     <link rel="stylesheet" href="stylesheets/history.css" />
-	<link rel="stylesheet" href="css/templatemo-style.css">
-	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+
     <script>
     
     function getBuy() {
        // done using promise using then function syntax
-        fetch('stocks/buy').then(function(result) {
+        fetch('stocks/sellquantity/Ahilan004').then(function(result) {
             return result.json();
         }).then(function (tradeList) {
         	 
@@ -47,9 +46,9 @@
 
                 var dateString = date + "-" +(month + 1) + "-" + year;
                 
-                htmlString+="<ul><li>" + dateString + "</li>";
-                htmlString+="<li><b>Quantity:</b>" + trade.quantity+ "</li>";
-                htmlString+="<li><b>State:</b>" + trade.state+ "</li></ul></div></div>";
+               //htmlString+="<ul><li>" + dateString + "</li>";
+                htmlString+="<ul><li><b>Quantity:</b>" + trade.quantity+ "</li></ul></div></div>";
+                //htmlString+="<li><b>State:</b>" + trade.state+ "</li></ul></div></div>";
                 
                 
             });
@@ -64,54 +63,12 @@
 
 
 <body onLoad="getBuy()">
-   <nav>
-        <div class="logo">
-            <a href="index.html">Code<em>Chefs</em> in Making</a>
-        </div>
-        <div class="menu-icon">
-        <span></span>
-      </div>
-    </nav>
+   
        
         
  
   <div id="tradeDiv"></div>
-  <section class="overlay-menu">
-      <div class="container">
-        <div class="row">
-          <div class="main-menu">
-              <ul>
-                  <li>
-                      <a href="index.html">Home</a>
-                  </li>
-                  <li>
-                      <a href="buy_history.html">Buy History</a>
-                  </li>
-                  <li>
-                      <a href="sell_history.html">Sell History</a>
-                  </li>
-                  <li>
-                      <a href="buystock.html">Buy Stock</a>
-                  </li>
-                  <li>
-                      <a href="sellstock.html">Sell Stock</a>
-                  </li>
-                  <li>
-                      <a href="https://docdro.id/4kpZyXR">Trading advice</a>
-                  </li>
-              </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-    <script src="js/vendor/bootstrap.min.js"></script>
-    
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
-    
+       
    
 </body>
 </html>
