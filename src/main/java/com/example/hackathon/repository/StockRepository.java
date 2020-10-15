@@ -17,7 +17,9 @@ public interface StockRepository extends MongoRepository<Trade, String> {
 	
 	public List<Trade> findByDate(String date);
 	public List<Trade> findByTicker(String ticker);
+	public List<Trade> findByUsername(String username);
 	public List<Trade> findByTickerAndUsername(String ticker,String Username);
+	public List<Trade> findByTypeAndUsername(TradeType tradType,String Username);
 	//public List<Stock> findByPriceRange(double price1, double price2);
 	public List<Trade> findByType(TradeType type);
 	public List<Trade> findByState(TradeState state);

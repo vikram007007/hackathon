@@ -60,12 +60,13 @@ public class SellStockController {
 		TradeType TradTypeBuy = TradeType.valueOf("BUY");
 		TradeType TradTypeSell = TradeType.valueOf("SELL");
 		TradeState TradStateFilled=TradeState.valueOf("FILLED");
+		TradeState TradStateRejected=TradeState.valueOf("REJECTED");
 		for (int i = 0; i <listTrade.size(); i++) {
 		    if(listTrade.get(i).getType().equals(TradTypeBuy)&&listTrade.get(i).getState().equals(TradStateFilled)) {
 		    	buyquantity+=listTrade.get(i).getQuantity();
 		    }
 		    
-		    else if(listTrade.get(i).getType().equals(TradTypeSell)&&listTrade.get(i).getState().equals(TradStateFilled)) {
+		    else if(listTrade.get(i).getType().equals(TradTypeSell)&&!listTrade.get(i).getState().equals(TradStateRejected)) {
 		    	sellquantity+=listTrade.get(i).getQuantity();
 		    }
 		    else {
@@ -77,5 +78,4 @@ public class SellStockController {
 		return buyquantity-sellquantity;	
 		}
 
-
-}
+	}
