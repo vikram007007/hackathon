@@ -35,6 +35,7 @@ import javax.validation.Valid;
 @CrossOrigin
 public class BuyStockController {
 	
+	
 	@Autowired
 	private StockRepository stockRepository;
 	
@@ -66,12 +67,12 @@ public class BuyStockController {
         return service.findHistory(w);
     }
 	
-	@RequestMapping(method=RequestMethod.POST, value="/create")
-	public Trade create(@Valid @RequestBody Trade stock) throws IOException{
+	@RequestMapping(method=RequestMethod.POST, value="/create/{username}")
+	public Trade create(@Valid @RequestBody Trade stock, @PathVariable String username) throws IOException{
 				stock.setDate(new Date(System.currentTimeMillis()));
 		TradeState Tradestate = TradeState.valueOf("CREATED");
 		stock.setState(Tradestate);
-		stock.setUsername("Ahilan004");
+			stock.setUsername(username);
 		FinanceService service=new FinanceService();
         StockWrapper w = service.findStock(stock.getTicker());
         BigDecimal big=service.findPrice(w);

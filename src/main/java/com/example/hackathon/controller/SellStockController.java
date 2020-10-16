@@ -34,12 +34,12 @@ public class SellStockController {
 	private StockRepository stockRepository;
 	
 	
-	@RequestMapping(method=RequestMethod.POST, value="/sellorder")
-	public Trade create(@Valid @RequestBody Trade stock) throws IOException{
+	@RequestMapping(method=RequestMethod.POST, value="/sellorder/{username}")
+	public Trade create(@Valid @RequestBody Trade stock,@PathVariable String username) throws IOException{
 				stock.setDate(new Date(System.currentTimeMillis()));
 		TradeState Tradestate = TradeState.valueOf("CREATED");
 		stock.setState(Tradestate);
-		stock.setUsername("Ahilan004");
+		stock.setUsername(username);
 		FinanceService service=new FinanceService();
         StockWrapper w = service.findStock(stock.getTicker());
         BigDecimal big=service.findPrice(w);
