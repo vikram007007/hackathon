@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <title>Sell History</title>
     <link rel="stylesheet" href="stylesheets/history.css" />
-
+	<link href="bcss/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="css/templatetemo-style1.css">
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/signupcss.css">
     <script>
     
-    function getBuy() {
+    function getSellUser() {
        // done using promise using then function syntax
-        fetch('stocks/sell').then(function(result) {
+        var uname = localStorage.getItem("user");
+        fetch('stock/sell/'+uname).then(function(result) {
             return result.json();
         }).then(function (tradeList) {
         	 
         	
 
-            let htmlString="<h1>Sell History</h1>";
+            let htmlString="";
             tradeList.map((trade) => {
             	
             	htmlString+="<div id=\"pricing-table\">";
@@ -50,8 +54,15 @@
 </head>
 
 
-<body onLoad="getBuy()">
-   
+<body class="bg-gra-02" onLoad="getSellUser()">
+   <nav>
+        <div class="logo">
+            <a><em>Sell History</em></a>
+        </div>
+        <div class="menu-icon">
+        <a class="signupcss" href ="home.html">Home </a>
+      </div>
+    </nav>
        
         
  

@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Buy Operations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="stylesheets/history.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link href="bcss/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="css/templatetemo-style1.css">
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/signupcss.css">
+    
 
     <script>
     
@@ -17,7 +24,7 @@
         	 
         	
 
-            let htmlString="<h1>Sell trades</h1>";
+            let htmlString="";
             tradeList.map((trade) => {
             	
             	htmlString+="<div id=\"pricing-table\">";
@@ -36,7 +43,7 @@
                 	}
                 else
                    {
-                 htmlString+="<a class=\"signup\" href='#' onClick=\"alert('Cannot sell this trade');\">Sell</a>";
+                 htmlString+="<a class=\"signup\" href='#' onClick=\"alert('Cannot sell this trade.Still in processing ');\">Sell</a>";
                    }
                 
                 
@@ -64,9 +71,17 @@
 </head>
 
 
-<body onLoad="getBuy()">
+<body class="bg-gra-02" onLoad="getBuy()">
    
-       
+      
+	<nav>
+        <div class="logo">
+            <a><em>Sell Trades</em></a>
+        </div>
+        <div class="menu-icon">
+        <a class="signupcss" href ="home.html">Home </a>
+      </div>
+    </nav>  
         
  
   <div id="tradeDiv"></div>

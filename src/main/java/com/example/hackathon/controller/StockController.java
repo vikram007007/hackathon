@@ -8,7 +8,6 @@ import yahoofinance.Stock;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +29,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/stock")
-@CrossOrigin
 public class StockController {
 	
 	@Autowired
@@ -50,6 +48,19 @@ public class StockController {
 		TradeType TradType = TradeType.valueOf("SELL");
 		return stockRepository.findByType(TradType);	
 		}
+	
+	@GetMapping("/buy/{uname}")
+	public List<Trade> getBuyUser(@PathVariable String uname){
+		TradeType TradType = TradeType.valueOf("BUY");
+		return stockRepository.findByTypeAndUsername(TradType, uname);	
+		}
+	
+	@GetMapping("/sell/{uname}")
+	public List<Trade> getSellUser(@PathVariable String uname){
+		TradeType TradType = TradeType.valueOf("SELL");
+		return stockRepository.findByTypeAndUsername(TradType, uname);	
+		}
+	
 	@RequestMapping(method=RequestMethod.POST, value="/create")
 	public Trade create(@Valid @RequestBody Trade stock) {
 				stock.setDate(new Date(System.currentTimeMillis()));

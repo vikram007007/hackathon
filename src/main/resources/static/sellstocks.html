@@ -22,9 +22,12 @@
     <link href="bvendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="bvendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
-    <!-- Main CSS-->
-    <link href="bcss/main.css" rel="stylesheet" media="all">
-    
+        <!-- Main CSS-->
+        <link href="bcss/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="css/signupcss.css">
+         <link rel="stylesheet" href="css/templatetemo-style1.css">
+         <link rel="stylesheet" href="css/main.css" />
+
     
  <script>
         
@@ -62,7 +65,7 @@
          	document.getElementById("AvailableQuantity").value=availablequantity;
          	if(availablequantity==0){
          		alert("0 Quantity to sell");
-         		window.location.href="index.html";
+         		window.location.href="home.html";
          	}
          });
      }).catch(function(error) {
@@ -76,7 +79,7 @@
             async function submitHandler(event) {
             	if(availablequantity==0){
              		alert("0 Quantity to sell");
-             		window.location.href="index.html";
+             		window.location.href="home.html";
              		return false;
              	}
             	else if(document.getElementById('quantity').value==0){
@@ -95,7 +98,7 @@
                 trade.quantity= form.quantity.value;
                 // done with a promise using await / async syntax
                 let response = await addtrade(trade);
-                window.location.href="index.html";
+                window.location.href="home.html";
                 return false;
             }}
 
@@ -226,15 +229,15 @@ var FieldVal = document.getElementById('quantity').value;
 </head>
 
 <body onload="myFunction();myFunction1()">
-
-	<nav>
+<nav>
         <div class="logo">
-            <a href="index.html">Code<em>Chefs</em> in Making</a>
+            <a href="home.html">Code<em>Chefs</em> in Making</a>
         </div>
         <div class="menu-icon">
-        <span></span>
+        <a class="signupcss" href ="home.html">Home </a>
       </div>
     </nav>
+	
 
 
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
@@ -328,35 +331,7 @@ var FieldVal = document.getElementById('quantity').value;
         </div>
     </div>
     
-    
-  <section class="overlay-menu">
-      <div style="" class="container"  >
-        <div class="row">
-          <div class="main-menu" >
-              <ul >
-                  
-                  <li>
-                      <a href="index.html" >Home</a>
-                  </li>
-                  
-                  <li>
-                      <a href="buy_history.html">Buy History</a>
-                  </li>
-                  <li>
-                      <a href="sell_history.html">Sell History</a>
-                  </li>
-                  <li>
-                      <a href="buy_operation.html">Stock Holdings</a>
-                  </li>
-                  <li>
-                      <a href="login.html">Logout</a>
-                  </li>
-              </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-	
+   
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 

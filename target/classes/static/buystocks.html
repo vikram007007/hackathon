@@ -23,7 +23,11 @@
     <link href="bvendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
-    <link href="bcss/main.css" rel="stylesheet" media="all">
+        <link href="bcss/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="css/signupcss.css">
+         <link rel="stylesheet" href="css/templatetemo-style1.css">
+         <link rel="stylesheet" href="css/main.css" />
+
 <script>
         
         //getting ticker from url
@@ -79,7 +83,7 @@
                 trade.quantity= form.quantity.value;
                 // done with a promise using await / async syntax
                 let response = await addtrade(trade);
-                window.location.href="index.html";
+                window.location.href="home.html";
                 return false;
             }}
 
@@ -169,6 +173,17 @@
 </head>
 
 <body onload="myFunction()">
+
+	<nav>
+        <div class="logo">
+            <a href="home.html">Code<em>Chefs</em> in Making</a>
+        </div>
+        <div class="menu-icon">
+        <a class="signupcss" href ="home.html">Home </a>
+      </div>
+    </nav>
+	
+
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">

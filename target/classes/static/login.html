@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
 	<title>Login</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
+ <link rel="stylesheet" href="css/main.css" />
+    <link href="bcss/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="css/login_home.css">
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/signupcss.css">
+
 </head>
 
 <script>
@@ -37,7 +43,7 @@ async function submitHandler(event) {
         		
         	localStorage.setItem("user",user.username);
         	
- 		   var url="index.html";
+ 		   var url="home.html";
  		    window.location.href=url;
  		    return false;
         	}
@@ -66,7 +72,12 @@ async function submitHandler(event) {
 </script>
 
 <body  onload="myfunction()">  
-
+<nav>
+       
+        <div class="menu-icon">
+        <a class="signupcss" href ="index.html">Home </a>
+      </div>
+    </nav>
 <form id="addForm" class="login100-form validate-form" name="addForm" method="post"> 
 <div class="limiter">
 		<div class="container-login100">

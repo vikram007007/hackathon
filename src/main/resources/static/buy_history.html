@@ -4,21 +4,27 @@
     <meta charset="UTF-8">
     <title>Buy History</title>
     <link rel="stylesheet" href="stylesheets/history.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link href="bcss/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="css/templatetemo-style1.css">
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/signupcss.css">
 
     <script>
     
-    function getBuy() {
+    function getBuyUser() {
        // done using promise using then function syntax
-        fetch('stocks/buy').then(function(result) {
+       var uname = localStorage.getItem("user");
+        fetch('stock/buy/'+uname).then(function(result) {
             return result.json();
         }).then(function (tradeList) {
         	 
         	
 
-            let htmlString="<h1>Buy History</h1>";
+            let htmlString="";
             tradeList.map((trade) => {
             	
-            	htmlString+="<div id=\"pricing-table\">";
+            	htmlString+="<div class = \"bg-gra-02\" id=\"pricing-table\">";
                 htmlString+= "<div class=\"plan\">";
                 
                 htmlString+="<h3>" + trade.ticker + "<span>" + trade.price +"$"+"</span></h3>";
@@ -50,13 +56,21 @@
 </head>
 
 
-<body onLoad="getBuy()">
+<body class="bg-gra-02" onLoad="getBuyUser()">
    
-       
+    
+	<nav>
+        <div class="logo">
+            <a><em>Buy History</em></a>
+        </div>
+        <div class="menu-icon">
+        <a class="signupcss" href ="home.html">Home </a>
+      </div>
+    </nav>
         
- 
+
   <div id="tradeDiv"></div>
        
-   
+  
 </body>
 </html>

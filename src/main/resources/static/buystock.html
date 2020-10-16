@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +25,9 @@
 
     <!-- Main CSS-->
     <link href="bcss/main.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="css/signupcss.css">
+         <link rel="stylesheet" href="css/templatetemo-style1.css">
+         <link rel="stylesheet" href="css/main.css" />
 <script>
         
         //getting ticker from url
@@ -48,109 +52,106 @@
  
  
         }*/
+        async function submitHandler(event) {
+        	if(document.getElementById('quantity').value==0){
+        		alert("Select Quantity to sell");
+         		window.location.href="#";
+        		return false;
+        	}
+        	else{
+            alert("Trade created");
+            // stops the form submitting itself we want to send the data to a REST API
+            event.preventDefault();
+            let form = event.target;
+            let trade= {}; 
+            trade.type ="BUY";
+            trade.ticker= form.ticker.value;
+            trade.quantity= form.quantity.value;
+            // done with a promise using await / async syntax
+            let response = await addtrade(trade);
+            window.location.href="home.html";
+            return false;
+        }}
+
+        async function addtrade(trade) {
+        	var user=localStorage.getItem("user");
+        	var url="/stocks/create/"+user;
+        	//alert(url);
+            let response = await fetch(url, {
+                method: "POST",
+                headers :{
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(trade)
+            });
+        }
         
         
-            async function submitHandler(event) {
-            	if(document.getElementById('quantity').value==0){
-            		alert("Select Quantity to sell");
-             		window.location.href="#";
-            		return false;
-            	}
-            	else{
-                alert("Trade created");
-                // stops the form submitting itself we want to send the data to a REST API
-                event.preventDefault();
-                let form = event.target;
-                let trade= {}; 
-                trade.type ="BUY";
-                trade.ticker= form.ticker.value;
-                trade.quantity= form.quantity.value;
-                // done with a promise using await / async syntax
-                let response = await addtrade(trade);
-                window.location.href="index.html";
-                return false;
-            }}
-
-            async function addtrade(trade) {
-            	var user=localStorage.getItem("user");
-            	var url="/stocks/create/"+user;
-            	//alert(url);
-                let response = await fetch(url, {
-                    method: "POST",
-                    headers :{
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify(trade)
+        function calculateprice(value){
+        	fetch('stocks/price/'+value).then(function(response){
+                response.json().then(function(data) {
+               	 availableprice=data;
+               	 document.getElementById("price").value =data;
+                	
+                	
                 });
-            }
-            
-            
-            function calculateprice(value){
-            	fetch('stocks/price/'+value).then(function(response){
-                    response.json().then(function(data) {
-                   	 availableprice=data;
-                   	 document.getElementById("price").value =data;
-                    	
-                    	
-                    });
-                }).catch(function(error) {
-                    console.log('Fetch Error:', error);
-                });
-            }
-            
-            function multiply()
-            {
-                a = Number(document.getElementById('quantity').value);
-                b = Number(document.getElementById('price').value);
-                c = a * b;
+            }).catch(function(error) {
+                console.log('Fetch Error:', error);
+            });
+        }
+        
+        function multiply()
+        {
+            a = Number(document.getElementById('quantity').value);
+            b = Number(document.getElementById('price').value);
+            c = a * b;
 
-                document.getElementById('total').value = c;
-            }
-            
-            function subtract()
-            {
-                a = Number(document.getElementById('total').value);
-                b = Number(document.getElementById('price').value);
-                c = a/b;
-                c=Math.floor(c)
+            document.getElementById('total').value = c;
+        }
+        
+        function subtract()
+        {
+            a = Number(document.getElementById('total').value);
+            b = Number(document.getElementById('price').value);
+            c = a/b;
+            c=Math.floor(c)
 
-                document.getElementById('quantity').value = c;
-            }
-            
-            
-            function enableText(period) {
-            	var str=1;
+            document.getElementById('quantity').value = c;
+        }
+        
+        
+        function enableText(period) {
+        	var str=1;
 
-            	if(period==1){
-            		//alert(typeof str);
-            		 var text1 = document.getElementById('total');
-                     var text= document.getElementById('quantity');
-                     document.getElementById("total").value =document.getElementById('price').value;
-                     document.getElementById("quantity").value =1;
-                     text1.readOnly = true;
-                     text.readOnly = false;
-             }
-            	else if(period==2){
-//            		alert(typeof period);
-            		var text1 = document.getElementById('total');
-                    var text= document.getElementById('quantity');
-                    document.getElementById("quantity").value =1;
-                    document.getElementById("total").value =document.getElementById('price').value;
-                    text1.readOnly =false;
-                    text.readOnly = true;
-            	}
-            	else{
-            		var text1 = document.getElementById('total');
-                    var text= document.getElementById('quantity');
-                    document.getElementById("quantity").value =0;
-                    document.getElementById("total").value =0;
-                    text1.readOnly =false;
-                    text.readOnly = true;
-            		
-            		
-            	}
-            }
-            
+        	if(period==1){
+        		//alert(typeof str);
+        		 var text1 = document.getElementById('total');
+                 var text= document.getElementById('quantity');
+                 document.getElementById("total").value =document.getElementById('price').value;
+                 document.getElementById("quantity").value =1;
+                 text1.readOnly = true;
+                 text.readOnly = false;
+         }
+        	else if(period==2){
+//        		alert(typeof period);
+        		var text1 = document.getElementById('total');
+                var text= document.getElementById('quantity');
+                document.getElementById("quantity").value =1;
+                document.getElementById("total").value =document.getElementById('price').value;
+                text1.readOnly =false;
+                text.readOnly = true;
+        	}
+        	else{
+        		var text1 = document.getElementById('total');
+                var text= document.getElementById('quantity');
+                document.getElementById("quantity").value =0;
+                document.getElementById("total").value =0;
+                text1.readOnly =false;
+                text.readOnly = true;
+        		
+        		
+        	}
+        }            
         </script>
 
 </head>
@@ -159,10 +160,10 @@
 
 	<nav>
         <div class="logo">
-            <a href="index.html">Code<em>Chefs</em> in Making</a>
+            <a href="home.html">Code<em>Chefs</em> in Making</a>
         </div>
         <div class="menu-icon">
-        <span></span>
+        <a class="signupcss" href ="home.html">Home </a>
       </div>
     </nav>
 
@@ -3091,33 +3092,7 @@
             </div>
         </div>
     </div>
-  <section class="overlay-menu">
-      <div style="" class="container"  >
-        <div class="row">
-          <div class="main-menu" >
-              <ul >
-                  
-                  <li>
-                      <a href="index.html" >Home</a>
-                  </li>
-                  
-                  <li>
-                      <a href="buy_history.html">Buy History</a>
-                  </li>
-                  <li>
-                      <a href="sell_history.html">Sell History</a>
-                  </li>
-                  <li>
-                      <a href="buy_operation.html">Stock Holdings</a>
-                  </li>
-                  <li>
-                      <a href="login.html">Logout</a>
-                  </li>
-              </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+  
 	
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>

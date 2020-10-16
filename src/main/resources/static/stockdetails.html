@@ -13,13 +13,13 @@
 	    const urlParams = new URLSearchParams(queryString);
 	    let id = urlParams.get('ticker');
 	   // alert(id);
-		window.open("buystocks.html?ticker="+id);
+		window.open("buystocks.html?ticker="+id,"_self");
 	}
 	</script>
 </head>
 <body onLoad='myfunc()'>
     <div class="container">
-        <h1>Historical Data</h1>
+       <a href="home.html"><h1>CODECHEFS in MAKING</h1></a>
         <p>History of Stocks</p>
         <div id="cdDiv"></div>
         <div id="stockChartContainer" style="height: 450px; width: 100%;"></div>

@@ -2,51 +2,55 @@
 <html lang="en">
 <head>
 	<title>Sign Up</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="css/util.css">
 <link rel="stylesheet" type="text/css" href="css/main.css">
+ <link rel="stylesheet" href="css/signupcss.css">
+<link rel="stylesheet" href="css/login_home.css">
 </head>
 
 <script>
 async function submitHandler(event) {
-	
 
     event.preventDefault();
     let form = event.target;
     let user = {}; 
     user.username= form.username.value;
-    var u = user.username;
-    user.email= form.email.value;
     user.password= form.pass.value;
+    user.email = form.email.value;
     
-    fetch('users/list').then(function(result) {
-        return result.json();
-    }).then(function (userList) {
-    	 
-        userList.map((user1) => {
+    var u = user.username;
+    var p = user.password;
+    
+    var url='users/check/'+u;
+    
+    
+    fetch(url).then(function(response){
+        response.json().then(function(data) {
+        	var res=data;
+        	if(res==0){
+        		
+        	//localStorage.setItem("user",user.username);
         	
-        	   var n = u.localeCompare(user1.username);
+ 		   //var url="login1.html";
+ 		   alert("registered successfully");
+ 		  let response = addUser(user);
+ 		    window.location.href="login.html";
+ 		    return false;
+        	}
+        	else{
+        		alert("Username already exists");
+        		window.location.href="signup.html";
+        	    return false;
         	   
-        	   if(n==0)
-        		   {
-        		    window.location.href="signup.html";
-        		    return false;
-        		   }
-        		   
-    
+        	}
+        	
         });
-    
-       
+    }).catch(function(error) {
+        console.log('Fetch Error:', error);
     });
-     
-     
-     
-    let response = await addUser(user);
-    //alert("Successfullt registered");
-   
+	
  
-    window.location.href="login.html";
-    return false;
 	
 }
 
@@ -68,7 +72,12 @@ async function addUser(user) {
 </script>
 
 <body>  
-
+<nav>
+       
+        <div class="menu-icon">
+        <a class="signupcss" href ="index.html">Home </a>
+      </div>
+    </nav>
 <form id="addForm" class="login100-form validate-form" name="addForm" method="post"> 
 <div class="limiter">
 		<div class="container-login100">
