@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Sign Up</title>
+
+<link rel="stylesheet" type="text/css" href="css/util.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<script>
+async function submitHandler(event) {
+	
+
+    event.preventDefault();
+    let form = event.target;
+    let user = {}; 
+    user.username= form.username.value;
+    var u = user.username;
+    user.email= form.email.value;
+    user.password= form.pass.value;
+    
+    fetch('users/list').then(function(result) {
+        return result.json();
+    }).then(function (userList) {
+    	 
+        userList.map((user1) => {
+        	
+        	   var n = u.localeCompare(user1.username);
+        	   
+        	   if(n==0)
+        		   {
+        		    window.location.href="signup.html";
+        		    return false;
+        		   }
+        		   
+    
+        });
+    
+       
+    });
+     
+     
+     
+    let response = await addUser(user);
+    //alert("Successfullt registered");
+   
+ 
+    window.location.href="login.html";
+    return false;
+	
+}
+
+
+async function addUser(user) {
+    let response = await fetch("/users/add", {
+        method: "POST",
+        headers :{
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(user)
+    });
+ 
+}
+
+
+
+
+</script>
+
+<body>  
+
+<form id="addForm" class="login100-form validate-form" name="addForm" method="post"> 
+<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100"> 
+					<span class="login100-form-title p-b-26">
+						Welcome<br><br>
+						<h5>Enter your details to register</h5>
+					   </span>
+			
+		 <!-- email -->  
+		<div class="wrap-input100 validate-input" data-validate = "Enter valid mail id">
+		Email:
+						<input required id="email" class="input100" type="text" name="email">
+						<span class="focus-input100"></span>
+					</div>
+					
+		<!--username -->		   
+		<div class="wrap-input100 validate-input" data-validate = "Enter Username">
+		Username:
+						<input required id="username" class="input100" type="text" name="username">
+						<span class="focus-input100"></span>
+		</div>
+		
+		<!-- password -->
+		<div class="wrap-input100 validate-input" data-validate="Enter password">
+		Password
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+						<input required id="password" class="input100" type="password" name="pass">
+						<span class="focus-input100"></span>
+					</div>
+					
+					
+		<!-- Submit -->
+			<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button type="submit" value="submit" class="login100-form-btn">
+								Register
+							</button>
+						</div>
+					</div>
+	   <!-- ------------- -->
+	   
+	   	<div class="text-center"><br><br>
+					
+		<a class="login100-form-title p-b-26" href="login.html">
+		Login
+		</a>
+		</div>
+		
+		 <!-- ------------- -->
+		
+		
+	   </div>
+	   </div>
+	   </div>
+					
+ 
+
+<!--<input type="submit" value="register">      -->
+</form> 
+
+
+	
+<script>
+
+	 document.getElementById("addForm").addEventListener("submit", submitHandler);
+
+</script>
+
+
+</body>
+</html>

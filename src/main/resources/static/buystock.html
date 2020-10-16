@@ -24,8 +24,6 @@
 
     <!-- Main CSS-->
     <link href="bcss/main.css" rel="stylesheet" media="all">
-    <link rel="stylesheet" href="css/templatemo-style.css">
-    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 <script>
         
         //getting ticker from url
@@ -74,7 +72,10 @@
             }}
 
             async function addtrade(trade) {
-                let response = await fetch("/stocks/create", {
+            	var user=localStorage.getItem("user");
+            	var url="/stocks/create/"+user;
+            	//alert(url);
+                let response = await fetch(url, {
                     method: "POST",
                     headers :{
                         'Content-Type': 'application/json;charset=utf-8'
@@ -155,6 +156,7 @@
 </head>
 
 <body >
+
 	<nav>
         <div class="logo">
             <a href="index.html">Code<em>Chefs</em> in Making</a>
@@ -163,6 +165,7 @@
         <span></span>
       </div>
     </nav>
+
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
@@ -3088,14 +3091,16 @@
             </div>
         </div>
     </div>
-	<section class="overlay-menu">
-      <div class="container">
+  <section class="overlay-menu">
+      <div style="" class="container"  >
         <div class="row">
-          <div class="main-menu">
-              <ul>
-              		<li>
-                      <a href="index.html">Home</a>
+          <div class="main-menu" >
+              <ul >
+                  
+                  <li>
+                      <a href="index.html" >Home</a>
                   </li>
+                  
                   <li>
                       <a href="buy_history.html">Buy History</a>
                   </li>
@@ -3103,27 +3108,26 @@
                       <a href="sell_history.html">Sell History</a>
                   </li>
                   <li>
-                      <a href="buystock.html">Buy Stock</a>
-                  </li>
-                  <li>
                       <a href="buy_operation.html">Stock Holdings</a>
                   </li>
                   <li>
-                      <a href="https://docdro.id/4kpZyXR">Trading advice</a>
+                      <a href="login.html">Logout</a>
                   </li>
               </ul>
           </div>
         </div>
       </div>
     </section>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
     
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+	
+
     <!-- Jquery JS-->
     <script src="bvendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->

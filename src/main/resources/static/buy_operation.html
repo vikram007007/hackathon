@@ -9,7 +9,9 @@
     
     function getBuy() {
        // done using promise using then function syntax
-        fetch('stocks/sellquantity/Ahilan004').then(function(result) {
+       var user=localStorage.getItem("user");
+            	var url="/stocks/sellquantity/"+user;
+        fetch(url).then(function(result) {
             return result.json();
         }).then(function (tradeList) {
         	 

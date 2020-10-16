@@ -8,9 +8,6 @@
     <meta name="description" content="Colorlib Templates">
     <meta name="author" content="Colorlib">
     <meta name="keywords" content="Colorlib Templates">
-    <link rel="stylesheet" href="css/templatemo-style.css">
-
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 
     <!-- Title Page-->
     <title>SELL STOCKS</title>
@@ -55,7 +52,10 @@
      });
  	
  	//fetch available quantity for sell and need to set username from session
- 	fetch('stocks/sell/'+urlParams.get('ticker')+'/Ahilan004').then(function(response){
+ 	            	var user=localStorage.getItem("user");
+            	//var url="/stocks/create/"+user;
+
+ 	fetch('stocks/sell/'+urlParams.get('ticker')+'/'+user).then(function(response){
          response.json().then(function(data) {
          	availablequantity=data;
          	
@@ -100,7 +100,10 @@
             }}
 
             async function addtrade(trade) {
-                let response = await fetch("/stocks/sellorder", {
+            	
+            	var user=localStorage.getItem("user");
+            	var url="/stocks/sellorder/"+user
+                let response = await fetch(url, {
                     method: "POST",
                     headers :{
                         'Content-Type': 'application/json;charset=utf-8'
@@ -216,11 +219,6 @@ var FieldVal = document.getElementById('quantity').value;
             		
             	}
             }
-
-            
-            
-            
-            
             
             
         </script>
@@ -228,6 +226,7 @@ var FieldVal = document.getElementById('quantity').value;
 </head>
 
 <body onload="myFunction();myFunction1()">
+
 	<nav>
         <div class="logo">
             <a href="index.html">Code<em>Chefs</em> in Making</a>
@@ -236,6 +235,8 @@ var FieldVal = document.getElementById('quantity').value;
         <span></span>
       </div>
     </nav>
+
+
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
@@ -326,11 +327,18 @@ var FieldVal = document.getElementById('quantity').value;
             </div>
         </div>
     </div>
-	<section class="overlay-menu">
-      <div class="container">
+    
+    
+  <section class="overlay-menu">
+      <div style="" class="container"  >
         <div class="row">
-          <div class="main-menu">
-              <ul>
+          <div class="main-menu" >
+              <ul >
+                  
+                  <li>
+                      <a href="index.html" >Home</a>
+                  </li>
+                  
                   <li>
                       <a href="buy_history.html">Buy History</a>
                   </li>
@@ -338,27 +346,26 @@ var FieldVal = document.getElementById('quantity').value;
                       <a href="sell_history.html">Sell History</a>
                   </li>
                   <li>
-                      <a href="buystock.html">Buy Stock</a>
-                  </li>
-                  <li>
                       <a href="buy_operation.html">Stock Holdings</a>
                   </li>
                   <li>
-                      <a href="https://docdro.id/4kpZyXR">Trading advice</a>
+                      <a href="login.html">Logout</a>
                   </li>
               </ul>
           </div>
         </div>
       </div>
     </section>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
     
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+	
+
     <!-- Jquery JS-->
     <script src="bvendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->

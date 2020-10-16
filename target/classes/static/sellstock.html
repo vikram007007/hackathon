@@ -25,7 +25,6 @@
     <!-- Main CSS-->
     <link href="bcss/main.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="css/templatemo-style.css">
-    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
  <script>
         
 
@@ -94,7 +93,10 @@
             }}
 
             async function addtrade(trade) {
-                let response = await fetch("/stocks/sellorder", {
+            	var user=localStorage.getItem("user");
+            	var url="/stocks/sellorder/"+user;
+
+                let response = await fetch(url, {
                     method: "POST",
                     headers :{
                         'Content-Type': 'application/json;charset=utf-8'
@@ -213,12 +215,6 @@ var FieldVal = document.getElementById('quantity').value;
             		
             	}
             }
-
-            
-            
-            
-            
-            
             
         </script>
 
@@ -3170,13 +3166,15 @@ var FieldVal = document.getElementById('quantity').value;
 
 
 	    <section class="overlay-menu">
-      <div class="container">
+      <div style="" class="container"  >
         <div class="row">
-          <div class="main-menu">
-              <ul>
-              <li>
-                      <a href="index.html">Home</a>
+          <div class="main-menu" >
+              <ul >
+                  
+                  <li>
+                      <a href="index.html" >Home</a>
                   </li>
+                  
                   <li>
                       <a href="buy_history.html">Buy History</a>
                   </li>
@@ -3184,13 +3182,10 @@ var FieldVal = document.getElementById('quantity').value;
                       <a href="sell_history.html">Sell History</a>
                   </li>
                   <li>
-                      <a href="buystock.html">Buy Stock</a>
+                      <a href="buy_operation.html">Stock Holdings</a>
                   </li>
                   <li>
-                      <a href="sellstock.html">Sell Stock</a>
-                  </li>
-                  <li>
-                      <a href="https://docdro.id/4kpZyXR">Trading advice</a>
+                      <a href="login.html">Logout</a>
                   </li>
               </ul>
           </div>
